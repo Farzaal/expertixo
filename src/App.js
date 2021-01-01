@@ -53,7 +53,6 @@ function App() {
   const optionSelection = (opt) => {
 
     if(selected) return;
-
     if(opt == correct) {
       setIsCorrect(true);
       setScore(score+5);
@@ -89,9 +88,10 @@ function App() {
           <Title style={messageStyle} level={3}>{ isCorrect ? 'Correct!' : 'Sorry!' }</Title>
         </Row>
         <Row>
+        {(current+1) == test.length ? <Title style={messageStyle} level={3}>Your Test Has Been Completed</Title> :
           <Col span={12} offset={11}>
             <Button onClick={nextQuestion}>Next Question</Button>
-          </Col>
+          </Col>}
         </Row>
       </div> 
       : ''}
