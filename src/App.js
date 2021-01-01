@@ -21,16 +21,11 @@ const { Title, Text } = Typography;
 function App() {
   const [current, setCurrent] = useState(0);
   const [test, setTest] = useState(questions);
-  const [bars, setBard] = useState([
-    {width: 40, color: '#dc3545'},
-    {width: 15, color: '#d5873d'},
-    {width: 15, color: '#f2d261'},
-    {width: 15, color: '#9baa4b'},
-    {width: 15, color: '#6fa053'}
-  ]);
   const [totalQuestions, setTotalQuestions] = useState(questions.length);
   const [options, setOptions] = useState([]);
   const [correct, setCorrect] = useState([]);
+  const [countCorrect, setCountCorrect] = useState(0);
+  const [countInCorrect, setCountInCorrect] = useState(0);
   const [selected, setSelected] = useState(false);
   const [score, setScore] = useState(0);
   const [isCorrect, setIsCorrect] = useState(0);
@@ -43,6 +38,11 @@ function App() {
     setSelected(false);
     setOptions(opts);
     setCorrect(answer);
+    const remaining = countCorrect + (test.length - (current+1)); 
+    console.log("From 100%");
+    console.log("Score : ", (countCorrect/(current+1)*100));
+    console.log("Maximum Score : ", ((countCorrect+remaining)/test.length * 100));
+    console.log("Lowest Score : ", (countCorrect/test.length * 100));
   }, [current])
 
   const nextQuestion = () => {
@@ -51,11 +51,17 @@ function App() {
   }
 
   const optionSelection = (opt) => {
+
+    if(selected) return;
+
     if(opt == correct) {
       setIsCorrect(true);
-      setScore(score+1);
-    } else
+      setScore(score+5);
+      setCountCorrect(countCorrect+1);
+    } else {
       setIsCorrect(false);
+      setCountInCorrect(countInCorrect+1);
+    }
 
     setSelected(true);
   }
